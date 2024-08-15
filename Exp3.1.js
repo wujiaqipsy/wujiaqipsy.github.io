@@ -48,6 +48,7 @@ var key = ['f', 'j']//左为yes,右为no
 let acc = 70;//正确率70%
 let view_texts_images = [];
 
+
 // 存储images和texts之间的对应关系
 var myMap = new Map();
 
@@ -243,9 +244,9 @@ var Instructions = {
       tmpI += `<p class="content">${v}</p>`;
     });
     // 返回的指导语 测试实验完成时间，确定分类任务试次以及正式实验试次数与block数
-    return ["<p class='header' style = 'font-size: 25px'>实验说明：</p><p style='color:white; font-size: 25px;line-height: 30px;'>您好，欢迎参加本实验。本次实验大约需要70分钟完成。</p><p style='color:white; font-size: 25px;'>在本实验中，您需要完成一个简单的图形分类任务。</p><p style='color:white; font-size: 25px;'>您将学习三种几何图形与文字标签的对应关系。</p>",
+    return ["<p class='header' style = 'font-size: 25px'>实验说明：</p><p style='color:white; font-size: 25px;line-height: 30px;'>您好，欢迎参加本实验。本次实验大约需要20分钟完成。</p><p style='color:white; font-size: 25px;'>在本实验中，您需要完成一个简单的图形分类任务。</p><p style='color:white; font-size: 25px;'>您将学习三种几何图形与文字标签的对应关系。</p>",
       start + `<div class="box">${tmpI}</div>`,
-      `<p style='color:white; font-size: 30px; line-height: 25px;'>您将首先完成三种分类要求下的练习任务。</p><p style='color:white; font-size: 30px; line-height: 30px;'>练习正确率达标后，您将完成三种要求下各5组匹配任务，每组完成后会有休息时间。</p>`,
+      `<p style='color:white; font-size: 30px; line-height: 25px;'>您将首先完成三种分类要求下的练习任务。</p><p style='color:white; font-size: 30px; line-height: 30px;'>练习正确率达标后，您将完成三种要求下各5组分类任务，每组完成后有休息时间。</p>`,
       middle + end];
   },
   show_clickable_nav: true,
@@ -258,15 +259,15 @@ timeline.push(Instructions);
 var instr_self = {
   type: jsPsychInstructions,
   pages: function () {
-    let start = "<p class='header' style = 'font-size: 25px'>任务要求：</p>",
+    let start = "<p class='header' style = 'font-size: 35px'>任务要求：</p>",
       end = "<p style = 'font-size: 25px; line-height: 30px;'练习任务目的是帮助您熟悉任务规则。如果您明白了规则：请点击 继续 </p><div>";
     // 返回的指导语：自我block
     return [
       start +
-      `<p class='footer' style='font-size: 30px; line-height: 35px;'>本阶段您需要将图形分为“自我”图形以及“非自我”图形</p>
-          <p class='footer' style='color:white; font-size: 35px;'>如果出现的图形是与“自我”标签对应的图形，请按<span style="color: lightgreen; font-size:35px">${key[0]}键</span>
-          <p class='footer' style='color:white; font-size: 35px;'>如果出现的图形不是与“自我”标签对应的图形，请按<span style="color: lightgreen; font-size:35px">${key[1]}键</span>
-          <p class='footer' style='color:lightgreen; font-size: 30px;'>本阶段为练习阶段，不限定反应时间，请您尽可能正确地按键。`
+      `<p class='footer' style='font-size: 35px; line-height: 30px;'>本阶段您需要将图形分为“自我”图形以及“非自我”图形</p>
+          <p class='footer' style='color:white; font-size: 35px;'>如果出现的图形<span style="color: lightgreen; font-size:35px">是与“自我”标签对应的图形</span>，请按<span style="color: lightgreen; font-size:35px">${key[0]}键</span>
+          <p class='footer' style='color:white; font-size: 35px;'>如果出现的图形<span style="color: lightgreen; font-size:35px">不是与“自我”标签对应的图形</span>，请按<span style="color: lightgreen; font-size:35px">${key[1]}键</span>
+          <p class='footer' style='font-size: 35px; line-height: 30px;'>本阶段为练习阶段，不限定反应时间，请您尽可能正确地按键。`
       + end];
   },
   show_clickable_nav: true,
@@ -343,12 +344,13 @@ let prac_self = {
       trial_duration: 25000,
       data: function () { return jsPsych.timelineVariable("identify") },
       on_finish: function (data) {
+        data.condition = "prac_self";
         data.correct_response = jsPsych.timelineVariable("identify", true)();
         data.correct = data.correct_response == data.key_press;//0对1错
         data.Image = jsPsych.timelineVariable("Image", true)();
         data.LeftLable = jsPsych.timelineVariable("LeftLable");
         data.RightLable = jsPsych.timelineVariable("RightLable");
-        data.condition = "freeprac_self"
+        data.shape = jsPsych.timelineVariable("shape", true)();
       }
     },
     // 反馈
@@ -381,25 +383,25 @@ let prac_self = {
         if (myMap.get(images[0]) === "自我") {
           return key[0];
         } else return key[1];
-      }
+      },shape:function(){return texts[0]}
     },
     {
       Image: function () { return images[1] }, LeftLable: LeftLable[0], RightLable: RightLable[0], identify: function () {
         if (myMap.get(images[1]) === "自我") {
           return key[0];
         } else return key[1];
-      }
+      },shape:function(){return texts[1]}
     },
     {
       Image: function () { return images[2] }, LeftLable: LeftLable[0], RightLable: RightLable[0], identify: function () {
         if (myMap.get(images[2]) === "自我") {
           return key[0];
         } else return key[1];
-      }
+      },shape:function(){return texts[2]}
     }
   ],
   randomize_order: true,
-  repetitions: 4,
+  repetitions: 4,//4
   on_finish: function () {
     $("body").css("cursor", "default"); //鼠标出现
   }
@@ -436,9 +438,9 @@ var feedback_continue_self = { //在这里呈现文字recap，让被试再记一
     return ["<p class='header' style='font-size:25px; line-height:30px;'>您的正确率未达到进入下一阶段练习的要求。</p>",
       start + `<div class="box">${tmpI}</div>` +
       `<p class='footer' style='font-size:25px; line-height:35px;'>您的任务是将图形分为“自我”图形以及“非自我”图形
-          <p class='footer' style='font-size:35px; line-height:30px;'>如果出现的图形是与“自我”标签对应的图形，请按 <span style="color: lightgreen;">${key[0]}键</span></p>
-          <p class='footer' style='font-size:35px; line-height:30px;'>如果出现的图形不是与“自我”标签对应的图形，请按 <span style="color: lightgreen;">${key[1]}键</span></p>
-          <p class='footer' style='font-size:22px; line-height:25px;'>请在实验过程中将您的<span style="color: lightgreen;">食指和中指</span>放在电脑键盘的相应键位上进行按键。</p></span>`,
+          <p class='footer' style='font-size:35px; line-height:30px;'>如果出现的图形<span style="color: lightgreen;">是与“自我”标签对应的图形</span>，请按 <span style="color: lightgreen;">${key[0]}键</span></p>
+          <p class='footer' style='font-size:35px; line-height:30px;'>如果出现的图形<span style="color: lightgreen;">不是与“自我”标签对应的图形</span>，请按 <span style="color: lightgreen;">${key[1]}键</span></p>
+          <p class='footer' style='font-size:22px; line-height:25px;'>请在实验过程中将您的<span style="color: lightgreen;">食指</span>放在电脑键盘的相应键位上进行按键。</p></span>`,
       middle + end];
   },
   show_clickable_nav: true,
@@ -457,7 +459,7 @@ var if_node1 = { //if_node 用于判断是否呈现feedback，feedback_continue_
   conditional_function: function (data) {
     var trials = jsPsych.data.get().filter(
       [{ correct: true }, { correct: false }]
-    ).last(12);//这里注意：只需要上一组的练习数据，而不是所有的数据！！ 如何实现：.last() 取data最后的几组数据（上一组练习数据）
+    ).last(12);//12这里注意：只需要上一组的练习数据，而不是所有的数据！！ 如何实现：.last() 取data最后的几组数据（上一组练习数据）
     var correct_trials = trials.filter({
       correct: true
     });
@@ -475,7 +477,7 @@ var freeloop_node1 = {
   loop_function: function () {
     var trials = jsPsych.data.get().filter(
       [{ correct: true }, { correct: false }]
-    ).last(12);//记得改，取数据
+    ).last(12);//12记得改，取数据
     var correct_trials = trials.filter({
       correct: true
     });
@@ -500,8 +502,8 @@ var instr_friend = {
     return [
       start +
       `<p class='footer' style='font-size: 30px; line-height: 35px;'>本阶段您需要将图形分为“朋友”图形以及“非朋友”图形</p>
-          <p class='footer' style='color:white; font-size: 35px;'>如果出现的图形是与“朋友”标签对应的图形，请按<span style="color: lightgreen; font-size:35px">${key[0]}键</span>
-          <p class='footer' style='color:white; font-size: 35px;'>如果出现的图形不是与“朋友”标签对应的图形，请按<span style="color: lightgreen; font-size:35px">${key[1]}键</span>
+          <p class='footer' style='color:white; font-size: 35px;'>如果出现的图形<span style="color: lightgreen; font-size:35px">是与“朋友”标签对应的图形</span>，请按<span style="color: lightgreen; font-size:35px">${key[0]}键</span>
+          <p class='footer' style='color:white; font-size: 35px;'>如果出现的图形<span style="color: lightgreen; font-size:35px">不是与“朋友”标签对应的图形</span>，请按<span style="color: lightgreen; font-size:35px">${key[1]}键</span>
           <p class='footer' style='color:lightgreen; font-size: 30px;'>本阶段为练习阶段，不限定反应时间，请您尽可能正确地按键。`
       + end];
   },
@@ -579,12 +581,14 @@ let prac_friend = {
       trial_duration: 25000,
       data: function () { return jsPsych.timelineVariable("identify") },
       on_finish: function (data) {
+        data.condition = "prac_friend";
         data.correct_response = jsPsych.timelineVariable("identify", true)();
         data.correct = data.correct_response == data.key_press;//0对1错
         data.Image = jsPsych.timelineVariable("Image", true)();
         data.LeftLable = jsPsych.timelineVariable("LeftLable");
         data.RightLable = jsPsych.timelineVariable("RightLable");
-        data.condition = "freeprac_self"
+        data.shape = jsPsych.timelineVariable("shape", true)();
+        
       }
     },
     // 反馈
@@ -617,25 +621,25 @@ let prac_friend = {
         if (myMap.get(images[0]) === "朋友") {
           return key[0];
         } else return key[1];
-      }
+      },shape:function(){return texts[0]}
     },
     {
       Image: function () { return images[1] }, LeftLable: LeftLable[1], RightLable: RightLable[1], identify: function () {
         if (myMap.get(images[1]) === "朋友") {
           return key[0];
         } else return key[1];
-      }
+      },shape:function(){return texts[1]}
     },
     {
       Image: function () { return images[2] }, LeftLable: LeftLable[1], RightLable: RightLable[1], identify: function () {
         if (myMap.get(images[2]) === "朋友") {
           return key[0];
         } else return key[1];
-      }
+      },shape:function(){return texts[2]}
     }
   ],
   randomize_order: true,
-  repetitions: 4,
+  repetitions: 4,//4
   on_finish: function () {
     $("body").css("cursor", "default"); //鼠标出现
   }
@@ -656,7 +660,7 @@ var feedback_continue_friend = { //在这里呈现文字recap，让被试再记�
       `<p class='footer' style='font-size:25px; line-height:35px;'>您的任务是将图形分为“朋友”图形以及“非朋友”图形
           <p class='footer' style='font-size:35px; line-height:30px;'>如果出现的图形是与“朋友”标签对应的图形，请按 <span style="color: lightgreen;">${key[0]}键</span></p>
           <p class='footer' style='font-size:35px; line-height:30px;'>如果出现的图形不是与“朋友”标签对应的图形，请按 <span style="color: lightgreen;">${key[1]}键</span></p>
-          <p class='footer' style='font-size:22px; line-height:25px;'>请在实验过程中将您的<span style="color: lightgreen;">食指和中指</span>放在电脑键盘的相应键位上进行按键。</p></span>`,
+          <p class='footer' style='font-size:22px; line-height:25px;'>请在实验过程中将您的<span style="color: lightgreen;">食指</span>放在电脑键盘的相应键位上进行按键。</p></span>`,
       middle + end];
   },
   show_clickable_nav: true,
@@ -675,7 +679,7 @@ var if_node2 = { //if_node 用于判断是否呈现feedback，feedback_continue_
   conditional_function: function (data) {
     var trials = jsPsych.data.get().filter(
       [{ correct: true }, { correct: false }]
-    ).last(12);//这里注意：只需要上一组的练习数据，而不是所有的数据！！ 如何实现：.last() 取data最后的几组数据（上一组练习数据）
+    ).last(12);//12这里注意：只需要上一组的练习数据，而不是所有的数据！！ 如何实现：.last() 取data最后的几组数据（上一组练习数据）
     var correct_trials = trials.filter({
       correct: true
     });
@@ -693,7 +697,7 @@ var freeloop_node2 = {
   loop_function: function () {
     var trials = jsPsych.data.get().filter(
       [{ correct: true }, { correct: false }]
-    ).last(12);//记得改，取数据
+    ).last(12);//12记得改，取数据
     var correct_trials = trials.filter({
       correct: true
     });
@@ -717,8 +721,8 @@ var instr_stranger = {
     return [
       start +
       `<p class='footer' style='font-size: 30px; line-height: 35px;'>本阶段您需要将图形分为“生人”图形以及“非生人”图形</p>
-          <p class='footer' style='color:white; font-size: 35px;'>如果出现的图形是与“生人”标签对应的图形，请按<span style="color: lightgreen; font-size:35px">${key[0]}键</span>
-          <p class='footer' style='color:white; font-size: 35px;'>如果出现的图形不是与“生人”标签对应的图形，请按<span style="color: lightgreen; font-size:35px">${key[1]}键</span>
+          <p class='footer' style='color:white; font-size: 35px;'>如果出现的图形<span style="color: lightgreen; font-size:35px">是与“生人”标签对应的图形</span>，请按<span style="color: lightgreen; font-size:35px">${key[0]}键</span>
+          <p class='footer' style='color:white; font-size: 35px;'>如果出现的图形<span style="color: lightgreen; font-size:35px">不是与“生人”标签对应的图形</span>，请按<span style="color: lightgreen; font-size:35px">${key[1]}键</span>
           <p class='footer' style='color:lightgreen; font-size: 30px;'>本阶段为练习阶段，不限定反应时间，请您尽可能正确地按键。`
       + end];
   },
@@ -796,12 +800,14 @@ let prac_stranger = {
       trial_duration: 25000,
       data: function () { return jsPsych.timelineVariable("identify") },
       on_finish: function (data) {
+        data.condition = "prac_stranger";
         data.correct_response = jsPsych.timelineVariable("identify", true)();
         data.correct = data.correct_response == data.key_press;//0对1错
         data.Image = jsPsych.timelineVariable("Image", true)();
         data.LeftLable = jsPsych.timelineVariable("LeftLable");
         data.RightLable = jsPsych.timelineVariable("RightLable");
-        data.condition = "freeprac_self"
+        data.shape = jsPsych.timelineVariable("shape", true)();
+        
       }
     },
     // 反馈
@@ -834,25 +840,25 @@ let prac_stranger = {
         if (myMap.get(images[0]) === "生人") {
           return key[0];
         } else return key[1];
-      }
+      },shape:function(){return texts[0]}
     },
     {
       Image: function () { return images[1] }, LeftLable: LeftLable[2], RightLable: RightLable[2], identify: function () {
         if (myMap.get(images[1]) === "生人") {
           return key[0];
         } else return key[1];
-      }
+      },shape:function(){return texts[1]}
     },
     {
       Image: function () { return images[2] }, LeftLable: LeftLable[2], RightLable: RightLable[2], identify: function () {
         if (myMap.get(images[2]) === "生人") {
           return key[0];
         } else return key[1];
-      }
+      },shape:function(){return texts[2]}
     }
   ],
   randomize_order: true,
-  repetitions: 4,
+  repetitions: 4,//4
   on_finish: function () {
     $("body").css("cursor", "default"); //鼠标出现
   }
@@ -873,7 +879,7 @@ var feedback_continue_stranger = { //在这里呈现文字recap，让被试再�
       `<p class='footer' style='font-size:25px; line-height:35px;'>您的任务是将图形分为“生人”图形以及“非生人”图形
           <p class='footer' style='font-size:35px; line-height:30px;'>如果出现的图形是与“生人”标签对应的图形，请按 <span style="color: lightgreen;">${key[0]}键</span></p>
           <p class='footer' style='font-size:35px; line-height:30px;'>如果出现的图形不是与“生人”标签对应的图形，请按 <span style="color: lightgreen;">${key[1]}键</span></p>
-          <p class='footer' style='font-size:22px; line-height:25px;'>请在实验过程中将您的<span style="color: lightgreen;">食指和中指</span>放在电脑键盘的相应键位上进行按键。</p></span>`,
+          <p class='footer' style='font-size:22px; line-height:25px;'>请在实验过程中将您的<span style="color: lightgreen;">食指</span>放在电脑键盘的相应键位上进行按键。</p></span>`,
       middle + end];
   },
   show_clickable_nav: true,
@@ -892,7 +898,7 @@ var if_node3 = { //if_node 用于判断是否呈现feedback，feedback_continue_
   conditional_function: function (data) {
     var trials = jsPsych.data.get().filter(
       [{ correct: true }, { correct: false }]
-    ).last(12);//这里注意：只需要上一组的练习数据，而不是所有的数据！！ 如何实现：.last() 取data最后的几组数据（上一组练习数据）
+    ).last(12);//12这里注意：只需要上一组的练习数据，而不是所有的数据！！ 如何实现：.last() 取data最后的几组数据（上一组练习数据）
     var correct_trials = trials.filter({
       correct: true
     });
@@ -910,7 +916,7 @@ var freeloop_node3 = {
   loop_function: function () {
     var trials = jsPsych.data.get().filter(
       [{ correct: true }, { correct: false }]
-    ).last(12);//记得改，取数据
+    ).last(12);//12记得改，取数据
     var correct_trials = trials.filter({
       correct: true
     });
@@ -939,7 +945,7 @@ var feedback_goformal = {
                                         <div><p class='context'>您正确回答了" + accuracy + "% 的试次。</p>" +
       "<p class='context'>您的平均反应时为" + rt + "毫秒。</p>" +
       "<p class='context'>恭喜您完成练习。您可以在此时休息一段时间，准备好后按任意键进入正式实验。</p>" +
-      "<p class='footer' style='font-size: 35px; line-height:40px;'>请在进入正式实验实验之前将您的<span style='color: lightgreen;'>食指和中指</span>放在电脑键盘的相应键位上，做好按键准备。</p>",
+      "<p class='footer' style='font-size: 35px; line-height:40px;'>请在进入正式实验实验之前将您的<span style='color: lightgreen;'>食指</span>放在电脑键盘的相应键位上，做好按键准备。</p>",
     ];
   },
   on_finish: function () {
@@ -1011,12 +1017,14 @@ let self = {
       trial_duration: 2500,
       data: function () { return jsPsych.timelineVariable("identify") },
       on_finish: function (data) {
+        data.condition = "self";
         data.correct_response = jsPsych.timelineVariable("identify", true)();
         data.correct = data.correct_response == data.key_press;//0对1错
         data.Image = jsPsych.timelineVariable("Image", true)();
         data.LeftLable = jsPsych.timelineVariable("LeftLable");
         data.RightLable = jsPsych.timelineVariable("RightLable");
-        data.condition = "self"
+        data.shape = jsPsych.timelineVariable("shape", true)();
+        
       }
     },
     // 反馈
@@ -1054,25 +1062,25 @@ let self = {
         if (myMap.get(images[0]) === "自我") {
           return key[0];
         } else return key[1];
-      }
+      },shape:function(){return texts[0]}
     },
     {
       Image: function () { return images[1] }, LeftLable: LeftLable[0], RightLable: RightLable[0], identify: function () {
         if (myMap.get(images[1]) === "自我") {
           return key[0];
         } else return key[1];
-      }
+      },shape:function(){return texts[1]}
     },
     {
       Image: function () { return images[2] }, LeftLable: LeftLable[0], RightLable: RightLable[0], identify: function () {
         if (myMap.get(images[2]) === "自我") {
           return key[0];
         } else return key[1];
-      }
+      },shape:function(){return texts[2]}
     }
   ],
   randomize_order: true,
-  repetitions: 4,
+  repetitions: 4,//4
   on_finish: function () {
     $("body").css("cursor", "default"); //鼠标出现
   }
@@ -1140,12 +1148,14 @@ let friend = {
       trial_duration: 2500,
       data: function () { return jsPsych.timelineVariable("identify") },
       on_finish: function (data) {
+        data.condition = "friend";
         data.correct_response = jsPsych.timelineVariable("identify", true)();
         data.correct = data.correct_response == data.key_press;//0对1错
         data.Image = jsPsych.timelineVariable("Image", true)();
         data.LeftLable = jsPsych.timelineVariable("LeftLable");
         data.RightLable = jsPsych.timelineVariable("RightLable");
-        data.condition = "friend"
+        data.shape = jsPsych.timelineVariable("shape", true)();
+        
       }
     },
     // 反馈
@@ -1183,25 +1193,25 @@ let friend = {
         if (myMap.get(images[0]) === "朋友") {
           return key[0];
         } else return key[1];
-      }
+      },shape:function(){return texts[0]}
     },
     {
       Image: function () { return images[1] }, LeftLable: LeftLable[1], RightLable: RightLable[1], identify: function () {
         if (myMap.get(images[1]) === "朋友") {
           return key[0];
         } else return key[1];
-      }
+      },shape:function(){return texts[1]}
     },
     {
       Image: function () { return images[2] }, LeftLable: LeftLable[1], RightLable: RightLable[1], identify: function () {
         if (myMap.get(images[2]) === "朋友") {
           return key[0];
         } else return key[1];
-      }
+      },shape:function(){return texts[2]}
     }
   ],
   randomize_order: true,
-  repetitions: 4,
+  repetitions: 4,//4
   on_finish: function () {
     $("body").css("cursor", "default"); //鼠标出现
   }
@@ -1269,12 +1279,14 @@ let stranger = {
       trial_duration: 2500,
       data: function () { return jsPsych.timelineVariable("identify") },
       on_finish: function (data) {
+        data.condition = "stranger";
         data.correct_response = jsPsych.timelineVariable("identify", true)();
         data.correct = data.correct_response == data.key_press;//0对1错
         data.Image = jsPsych.timelineVariable("Image", true)();
         data.LeftLable = jsPsych.timelineVariable("LeftLable");
         data.RightLable = jsPsych.timelineVariable("RightLable");
-        data.condition = "stranger"
+        data.shape = jsPsych.timelineVariable("shape", true)();
+        
       }
     },
     // 反馈
@@ -1312,25 +1324,25 @@ let stranger = {
         if (myMap.get(images[0]) === "生人") {
           return key[0];
         } else return key[1];
-      }
+      },shape:function(){return texts[0]}
     },
     {
       Image: function () { return images[1] }, LeftLable: LeftLable[2], RightLable: RightLable[2], identify: function () {
         if (myMap.get(images[1]) === "生人") {
           return key[0];
         } else return key[1];
-      }
+      },shape:function(){return texts[1]}
     },
     {
       Image: function () { return images[2] }, LeftLable: LeftLable[2], RightLable: RightLable[2], identify: function () {
         if (myMap.get(images[2]) === "生人") {
           return key[0];
         } else return key[1];
-      }
+      },shape:function(){return texts[2]}
     }
   ],
   randomize_order: true,
-  repetitions: 4,
+  repetitions: 4,//4
   on_finish: function () {
     $("body").css("cursor", "default"); //鼠标出现
   }
@@ -1385,7 +1397,7 @@ let cong_stranger = {
 let p_self = {
   type: jsPsychHtmlKeyboardResponse,
   stimulus: `
-      <p>请您将食指和中指放在相应按键上，准备进入<span style='color: yellow;'>自我图形分类任务</span></p>
+      <p>请您将食指放在相应按键上，准备进入<span style='color: yellow;'>自我图形分类任务</span></p>
       <p> <div style = "color: green"><按任意键开始></div></p>
       `,
   choices: "ALL_KEYS",
@@ -1393,7 +1405,7 @@ let p_self = {
 let p_friend = {
   type: jsPsychHtmlKeyboardResponse,
   stimulus: `
-      <p>请您将食指和中指放在相应按键上，准备进入<span style='color: yellow;'>朋友图形分类任务</span></p>
+      <p>请您将食指放在相应按键上，准备进入<span style='color: yellow;'>朋友图形分类任务</span></p>
       <p> <div style = "color: green"><按任意键开始></div></p>
       `,
   choices: "ALL_KEYS",
@@ -1401,7 +1413,7 @@ let p_friend = {
 let p_stranger = {
   type: jsPsychHtmlKeyboardResponse,
   stimulus: `
-      <p>请您将食指和中指放在相应按键上，准备进入<span style='color: yellow;'>生人图形分类任务</span></p>
+      <p>请您将食指放在相应按键上，准备进入<span style='color: yellow;'>生人图形分类任务</span></p>
       <p> <div style = "color: green"><按任意键开始></div></p>
       `,
   choices: "ALL_KEYS",
