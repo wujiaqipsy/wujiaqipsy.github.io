@@ -1080,7 +1080,7 @@ let self = {
     }
   ],
   randomize_order: true,
-  repetitions: 4,//4
+  repetitions: 5,//4
   on_finish: function () {
     $("body").css("cursor", "default"); //鼠标出现
   }
@@ -1211,7 +1211,7 @@ let friend = {
     }
   ],
   randomize_order: true,
-  repetitions: 4,//4
+  repetitions: 5,//4
   on_finish: function () {
     $("body").css("cursor", "default"); //鼠标出现
   }
@@ -1342,7 +1342,7 @@ let stranger = {
     }
   ],
   randomize_order: true,
-  repetitions: 4,//4
+  repetitions: 5,//4
   on_finish: function () {
     $("body").css("cursor", "default"); //鼠标出现
   }
@@ -1355,7 +1355,7 @@ let feedback_block = {
     // aaaaa = 1;  筛选，必须要！！！！！！！！！！！
     let trials = jsPsych.data.get().filter(
       [{ correct: true }, { correct: false }]
-    ).last(12);// last()填入一个block里的trial总数
+    ).last(15);// last()填入一个block里的trial总数
     let correct_trials = trials.filter({
       correct: true
     });
