@@ -29,9 +29,9 @@ var timeline = []
 
 
 // 图片刺激
-var images = ['img/C_28.png',
-  'img/S_28.png',
-  'img/H_28.png']
+var images = ['../img/C_28.png',
+  '../img/S_28.png',
+  '../img/H_28.png']
 
 // 预加载实验刺激
 var preload = {
