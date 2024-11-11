@@ -369,7 +369,7 @@ timeline_variables:[
 {Image:function(){return images[2]}, shape:function(){return texts[2]},word:function(){return texts[2]}, identify:function(){return key[0]}},
 ],
 randomize_order:true,
-repetitions:2,//2,练习设置24个trial
+repetitions:1,//2,练习设置24个trial
 on_finish:function(){
   // $("body").css("cursor", "default"); //鼠标出现
 }
@@ -585,7 +585,7 @@ timeline_variables:[
   {Image:function(){return images[2]}, shape:function(){return texts[2]},word:function(){return texts[2]}, identify:function(){return key[0]}},
   ],
 randomize_order:true,
-repetitions:6, //6;一个block里的试次数
+repetitions:1, //6;一个block里的试次数
 on_finish:function(){
   $("body").css("cursor", "default"); //鼠标出现
 }
@@ -648,7 +648,7 @@ let rest_matching_task = {
 var repeatblock_matching = [
   {
       timeline: [matching_task, feedback_block_matching, rest_matching_task],
-      repetitions:5//5
+      repetitions:1//5
   },
 
 ];
@@ -814,7 +814,7 @@ let prac_self = {
     }
   ],
   randomize_order: true,
-  repetitions: 8,//8；练习试次32个
+  repetitions: 2,//8；练习试次32个
   on_finish: function () {
     $("body").css("cursor", "default"); //鼠标出现
   }
@@ -1034,7 +1034,7 @@ let self = {
     }
   ],
   randomize_order: true,
-  repetitions: 16,//16;trial分配：自我160；朋友&生人80
+  repetitions: 2,//16;trial分配：自我160；朋友&生人80
   on_finish: function () {
     $("body").css("cursor", "default"); //鼠标出现
   }
@@ -1123,7 +1123,7 @@ var repeatblock1 = [
   p_self,
   {
     timeline: [self, feedback_block, rest_self],
-    repetitions: 5 //5个block
+    repetitions: 1 //5个block
   },
   cong_self
 ];
