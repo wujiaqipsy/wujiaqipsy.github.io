@@ -700,7 +700,7 @@ var Instr_classifying_task = {
             `<div class="box">${tmpI}</div>`,
             "<p style='color:white; font-size: 35px; line-height: 35px;'>在图形分类任务中，<p style='color:lightgreen; font-size: 35px;'>您的任务是将几何图形分成生人图形与非生人图形两类。</span></p>" +
             "<p style = 'color:white; font-size: 35px;' > 图形上方会显示分类标签，<p style='color:lightgreen; font-size: 35px;'>您需要根据标签的位置按下键盘的左键或右键对图形进行分类</span></p>" +
-            "<p style = 'color:white; font-size: 35px; line-height: 35px;' > 分类标签的位置在实验过程中会产生左右变化，请您尽可能又快又准地按键。</p> ",
+            "<p style = 'color:white; font-size: 35px; line-height: 35px;' > 分类标签的位置在实验过程中会产生左右变化，<p style='color:lightgreen; font-size: 35px;'>请您尽可能又快又准地按键。</span></p> ",
             middle + end];
     },
     show_clickable_nav: true,
@@ -958,7 +958,7 @@ var instr_repractice_stranger = { //在这里呈现文字recap，让被试再记
             start + `<div class="box">${tmpI}</div>`,
             "<p style='color:white; font-size: 35px; line-height: 35px;'>在图形分类任务中，<p style='color:lightgreen; font-size: 35px;'>您的任务是将几何图形分成生人图形与非生人图形两类。</span></p>" +
             "<p style = 'color:white; font-size: 35px;' > 图形上方会显示分类标签，<p style='color:lightgreen; font-size: 35px;'>您需要根据标签的位置按下键盘的左键或右键对图形进行分类</span></p>" +
-            "<p style = 'color:white; font-size: 35px; line-height: 35px;' > 分类标签的位置在实验过程中会产生左右变化，请您尽可能又快又准地按键。</p> ",
+            "<p style = 'color:white; font-size: 35px; line-height: 35px;' > 分类标签的位置在实验过程中会产生左右变化，<p style='color:lightgreen; font-size: 35px;'>请您尽可能又快又准地按键。</span></p> ",
             middle + end];
     },
     show_clickable_nav: true,
