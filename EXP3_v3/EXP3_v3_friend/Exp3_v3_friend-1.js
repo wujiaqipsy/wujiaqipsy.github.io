@@ -377,7 +377,7 @@ var matching_prac = {
         { Image: function () { return images[2] }, shape: function () { return texts[2] }, word: function () { return texts[2] }, identify: function () { return key_match[0] } },
     ],
     randomize_order: true,
-    repetitions: 1,//2,练习设置24个trial
+    repetitions: 2,//2,练习设置24个trial
     on_load: () => {
         $("body").css("cursor", "none");
     },
@@ -599,7 +599,7 @@ let matching_task = {
         { Image: function () { return images[2] }, shape: function () { return texts[2] }, word: function () { return texts[2] }, identify: function () { return key_match[0] } },
     ],
     randomize_order: true,
-    repetitions: 1, //6;一个block里的试次数
+    repetitions: 6, //6;一个block里的试次数
     on_load: () => {
         $("body").css("cursor", "none");
     },
@@ -668,7 +668,7 @@ let rest_matching_task = {
 var repeatblock_matching = [
     {
         timeline: [matching_task, feedback_block_matching, rest_matching_task],
-        repetitions: 1//5
+        repetitions: 5//5
     },
 
 ];
@@ -798,8 +798,8 @@ let prac_friend = {
                 data.correct_response = jsPsych.timelineVariable("identify", true)();
                 data.correct = data.correct_response == data.key_press;//0对1错
                 data.Image = jsPsych.timelineVariable("Image", true)();
-                data.LeftLable = jsPsych.timelineVariable("LeftLable");
-                data.RightLable = jsPsych.timelineVariable("RightLable");
+                data.LeftLable = jsPsych.timelineVariable("LeftLable", true);
+                data.RightLable = jsPsych.timelineVariable("RightLable", true);
                 data.shape = jsPsych.timelineVariable("shape", true)();
                 data.association = view_texts_images;
             }
@@ -917,7 +917,7 @@ let prac_friend = {
         }
     ],
     randomize_order: true,
-    repetitions: 1,//；4；32个prac_trial
+    repetitions: 4,//；4；32个prac_trial
     on_load: () => {
         $("body").css("cursor", "none");
     },
@@ -1103,8 +1103,8 @@ let friend = {
                 data.correct_response = jsPsych.timelineVariable("identify", true)();
                 data.correct = data.correct_response == data.key_press;//0对1错
                 data.Image = jsPsych.timelineVariable("Image", true)();
-                data.LeftLable = jsPsych.timelineVariable("LeftLable");
-                data.RightLable = jsPsych.timelineVariable("RightLable");
+                data.LeftLable = jsPsych.timelineVariable("LeftLable", true);
+                data.RightLable = jsPsych.timelineVariable("RightLable", true);
                 data.shape = jsPsych.timelineVariable("shape", true)();
                 data.association = view_texts_images;
 
@@ -1198,7 +1198,7 @@ let friend = {
         }
     ],
     randomize_order: true,
-    repetitions: 1,//8；每个block64个trial; 
+    repetitions: 8,//8；每个block64个trial; 
     on_load: () => {
         $("body").css("cursor", "none");
     },
@@ -1281,7 +1281,7 @@ let rest_friend = {
 var repeatblock1 = [
     {
         timeline: [friend, feedback_block, rest_friend],
-        repetitions: 1 //5个block
+        repetitions: 5 //5个block
     },
     cong_friend
 ];
