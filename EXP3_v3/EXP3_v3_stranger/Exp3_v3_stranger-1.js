@@ -253,8 +253,8 @@ var Instructions = {
             start + `<div class="box">${tmpI}</div>`,
             `<p class='footer' style='font-size: 35px; line-height: 30px;'>首先进行知觉匹配任务。</p>
       <p class='footer' style='font-size: 35px; line-height: 30px;'>在知觉匹配任务中，您的任务是判断几何图形与文字标签是否匹配，</p>
-      <p class='footer' style='color:white; font-size: 35px;'>如果二者<span style="color: lightgreen;">匹配</span>，请按 <span style="color: lightgreen; font-size:35px">${key_match_chinese[0]}</span></p>
-      <p class='footer' style='color:white; font-size: 35px;'>如果二者<span style="color: lightgreen;">不匹配</span>，请按<span style="color: lightgreen; font-size:35px"> ${key_match_chinese[1]}</p></span>
+      <p class='footer' style='color:white; font-size: 35px;'>如果二者<span style="color: lightgreen;">匹配</span>，请按键盘 <span style="color: lightgreen; font-size:35px">${key_match_chinese[0]}</span></p>
+      <p class='footer' style='color:white; font-size: 35px;'>如果二者<span style="color: lightgreen;">不匹配</span>，请按键盘<span style="color: lightgreen; font-size:35px"> ${key_match_chinese[1]}</p></span>
       <p class='footer' style='color:white; font-size: 22px;'>请在实验过程中将您右手的<span style="color: lightgreen;">食指和无名指</span>放在电脑键盘的相应键位上准备按键。</p></span>`,
             `<p style='color:white; font-size: 35px; line-height: 30px;'>接下来，您将进入知觉匹配任务的练习部分</p>
       <p class='footer' style='color:lightgreen; font-size: 35px;'>请您又快又准地进行按键。</p>
@@ -288,31 +288,31 @@ var matching_prac = {
                     line_width: 5,
                     line_color: 'white', // You can use the HTML color name instead of the HEX color.
                     show_start_time: 500,
-                    show_end_time: 1100// ms after the start of the trial
+                    show_end_time: 2500//1100
                 },
                 {
                     obj_type: "image",
                     file: function () { return jsPsych.timelineVariable("Image")() },
                     startX: "center", // location of the cross's center in the canvas
-                    startY: -250,//-175，目前参数肉眼等距
+                    startY: -200,//-250/-175，目前参数肉眼等距
                     width: 190,  // 调整图片大小 视角：3.8° x 3.8°
                     heigth: 190, // 调整图片大小 视角：3.8° x 3.8°
                     show_start_time: 1000, // ms after the start of the trial
-                    show_end_time: 1100,//出现50ms
+                    show_end_time: 2500,//1100
                     origin_center: true
                 },//上一组end时间减去下一组show时间就是空屏的100ms
                 {
                     obj_type: 'text',
                     file: function () { return jsPsych.timelineVariable("word") },
                     startX: "center",
-                    startY: 140, //175，图形和文字距离 与加号等距2度
+                    startY: 100, //140/175，图形和文字距离 与加号等距2度
                     content: function () {
                         return jsPsych.timelineVariable('word', true)();
                     },
                     font: `${80}px 'Arial'`, //字体和颜色设置 文字视角：3.6° x 1.6°
                     text_color: 'white',
                     show_start_time: 1000, // ms after the start of the trial
-                    show_end_time: 1100,
+                    show_end_time: 2500,//1100
                     origin_center: true
                 }
             ],
@@ -377,7 +377,7 @@ var matching_prac = {
         { Image: function () { return images[2] }, shape: function () { return texts[2] }, word: function () { return texts[2] }, identify: function () { return key_match[0] } },
     ],
     randomize_order: true,
-    repetitions: 2,//2,练习设置24个trial
+    repetitions: 1,//2,练习设置24个trial
     on_load: () => {
         $("body").css("cursor", "none");
     },
@@ -417,8 +417,8 @@ var instr_repractice = { //在这里呈现文字recap，让被试再记一下
         return ["<p class='header' style='font-size:35px; line-height:30px;'>您的正确率未达到进入正式实验的要求。</p>",
             start + `<div class="box">${tmpI}</div>`,
             `<p class='footer' style='font-size:35px; line-height:30px;'>您的任务是判断几何图形与文字标签是否匹配，</p>
-      <p class='footer' style='font-size:35px; line-height:30px;'>如果二者<span style="color: lightgreen;">匹配</span>，请按 <span style="color: lightgreen;">${key_match_chinese[0]}</span></p>
-      <p class='footer' style='font-size:35px'>如果二者<span style="color: lightgreen;">不匹配</span>，请按<span style="color: lightgreen;"> ${key_match_chinese[1]}</p>
+      <p class='footer' style='font-size:35px; line-height:30px;'>如果二者<span style="color: lightgreen;">匹配</span>，请按键盘 <span style="color: lightgreen;">${key_match_chinese[0]}</span></p>
+      <p class='footer' style='font-size:35px; line-height:30px;'>如果二者<span style="color: lightgreen;">不匹配</span>，请按键盘<span style="color: lightgreen;"> ${key_match_chinese[1]}</p>
       </span><p class='footer' style='color: lightgreen; font-size:35px; line-height:30px;'>请您又快又准地进行按键。</p></span>`,
             middle + end];
     },
@@ -516,7 +516,7 @@ let matching_task = {
                     obj_type: "image",
                     file: function () { return jsPsych.timelineVariable("Image")() },
                     startX: "center", // location of the cross's center in the canvas
-                    startY: -250,//-175
+                    startY: -200,//-175
                     width: 190,  // 调整图片大小 视角：3.8° x 3.8°
                     heigth: 190, // 调整图片大小 视角：3.8° x 3.8°
                     show_start_time: 1000, // ms after the start of the trial
@@ -527,7 +527,7 @@ let matching_task = {
                     obj_type: 'text',
                     file: function () { return jsPsych.timelineVariable("word") },
                     startX: "center",
-                    startY: 140, //175，
+                    startY: 120, //175，
                     content: function () {
                         return jsPsych.timelineVariable('word', true)();
                     },
@@ -640,7 +640,7 @@ let rest_matching_task = {
             [{ correct: true }, { correct: false }]
         );
         return `
-                    <p>您当前还剩余${blockTotalNum_same}组实验</p>
+                    <p>知觉匹配任务中，您还剩余${blockTotalNum_same}组实验</p>
                     <p>现在是休息时间，当您结束休息后，您可以点击 结束休息 按钮 继续</p>
                     <p>建议休息时间还剩余<span id="iii">60</span>秒</p>`
     },
@@ -698,8 +698,8 @@ var Instr_classifying_task = {
             "<p style='color:lightgreen; font-size: 35px;'>接下来您将进入图形分类任务</p>" +
             "<p style='color:white; font-size: 35px;'>请您再次记住三种几何图形与文字标签的对应关系。</p> ",
             `<div class="box">${tmpI}</div>`,
-            "<p style='color:white; font-size: 35px; line-height: 35px;'>在图形分类任务中，<p style='color:lightgreen; font-size: 35px;'>您的任务是将几何图形分成朋友图形与非朋友图形两类。</span></p>" +
-            "<p style = 'color:white; font-size: 35px;' > 图形上方会显示分类标签，您需要根据标签的位置按下键盘的左键或右键对图形进行分类</p>" +
+            "<p style='color:white; font-size: 35px; line-height: 35px;'>在图形分类任务中，<p style='color:lightgreen; font-size: 35px;'>您的任务是将几何图形分成生人图形与非生人图形两类。</span></p>" +
+            "<p style = 'color:white; font-size: 35px;' > 图形上方会显示分类标签，<p style='color:lightgreen; font-size: 35px;'>您需要根据标签的位置按下键盘的左键或右键对图形进行分类</span></p>" +
             "<p style = 'color:white; font-size: 35px; line-height: 35px;' > 分类标签的位置在实验过程中会产生左右变化，请您尽可能又快又准地按键。</p> ",
             middle + end];
     },
@@ -917,7 +917,7 @@ let prac_stranger = {
         }
     ],
     randomize_order: true,
-    repetitions: 4,//；4；32个prac_trial
+    repetitions: 1,//；4；32个prac_trial
     on_load: () => {
         $("body").css("cursor", "none");
     },
@@ -956,8 +956,8 @@ var instr_repractice_stranger = { //在这里呈现文字recap，让被试再记
         });
         return ["<p class='header' style='font-size:35px; line-height:35px;'>您的正确率未达到进入正式实验的要求。</p>",
             start + `<div class="box">${tmpI}</div>`,
-            "<p style='color:white; font-size: 35px; line-height: 35px;'>在图形分类任务中，<p style='color:lightgreen; font-size: 35px;'>您的任务是将几何图形分成朋友图形与非朋友图形两类。</span></p>" +
-            "<p style = 'color:white; font-size: 35px;' > 图形上方会显示分类标签，您需要根据标签的位置按下键盘的左键或右键对图形进行分类</p>" +
+            "<p style='color:white; font-size: 35px; line-height: 35px;'>在图形分类任务中，<p style='color:lightgreen; font-size: 35px;'>您的任务是将几何图形分成生人图形与非生人图形两类。</span></p>" +
+            "<p style = 'color:white; font-size: 35px;' > 图形上方会显示分类标签，<p style='color:lightgreen; font-size: 35px;'>您需要根据标签的位置按下键盘的左键或右键对图形进行分类</span></p>" +
             "<p style = 'color:white; font-size: 35px; line-height: 35px;' > 分类标签的位置在实验过程中会产生左右变化，请您尽可能又快又准地按键。</p> ",
             middle + end];
     },
