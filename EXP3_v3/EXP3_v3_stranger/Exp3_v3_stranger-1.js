@@ -288,7 +288,7 @@ var matching_prac = {
                     line_width: 5,
                     line_color: 'white', // You can use the HTML color name instead of the HEX color.
                     show_start_time: 500,
-                    show_end_time: 2500//1100
+                    show_end_time: 1100//1100
                 },
                 {
                     obj_type: "image",
@@ -298,7 +298,7 @@ var matching_prac = {
                     width: 190,  // 调整图片大小 视角：3.8° x 3.8°
                     heigth: 190, // 调整图片大小 视角：3.8° x 3.8°
                     show_start_time: 1000, // ms after the start of the trial
-                    show_end_time: 2500,//1100
+                    show_end_time: 1100,//1100
                     origin_center: true
                 },//上一组end时间减去下一组show时间就是空屏的100ms
                 {
@@ -312,7 +312,7 @@ var matching_prac = {
                     font: `${80}px 'Arial'`, //字体和颜色设置 文字视角：3.6° x 1.6°
                     text_color: 'white',
                     show_start_time: 1000, // ms after the start of the trial
-                    show_end_time: 2500,//1100
+                    show_end_time: 1100,//1100
                     origin_center: true
                 }
             ],
@@ -516,7 +516,7 @@ let matching_task = {
                     obj_type: "image",
                     file: function () { return jsPsych.timelineVariable("Image")() },
                     startX: "center", // location of the cross's center in the canvas
-                    startY: -200,//-175
+                    startY: -200,//-250
                     width: 190,  // 调整图片大小 视角：3.8° x 3.8°
                     heigth: 190, // 调整图片大小 视角：3.8° x 3.8°
                     show_start_time: 1000, // ms after the start of the trial
@@ -527,7 +527,7 @@ let matching_task = {
                     obj_type: 'text',
                     file: function () { return jsPsych.timelineVariable("word") },
                     startX: "center",
-                    startY: 120, //175，
+                    startY: 100, //140，
                     content: function () {
                         return jsPsych.timelineVariable('word', true)();
                     },
@@ -599,7 +599,7 @@ let matching_task = {
         { Image: function () { return images[2] }, shape: function () { return texts[2] }, word: function () { return texts[2] }, identify: function () { return key_match[0] } },
     ],
     randomize_order: true,
-    repetitions: 6, //6;一个block里的试次数
+    repetitions: 1, //6;一个block里的试次数
     on_load: () => {
         $("body").css("cursor", "none");
     },
@@ -668,7 +668,7 @@ let rest_matching_task = {
 var repeatblock_matching = [
     {
         timeline: [matching_task, feedback_block_matching, rest_matching_task],
-        repetitions: 5//5
+        repetitions: 1//5
     },
 
 ];
@@ -1198,7 +1198,7 @@ let stranger = {
         }
     ],
     randomize_order: true,
-    repetitions: 8,//8；每个block64个trial;
+    repetitions: 1,//8；每个block64个trial;
     on_load: () => {
         $("body").css("cursor", "none");
     },
@@ -1281,7 +1281,7 @@ let rest_stranger = {
 var repeatblock1 = [
     {
         timeline: [stranger, feedback_block, rest_stranger],
-        repetitions: 5 //5个block
+        repetitions: 1 //5个block
     },
     cong_stranger
 ];
