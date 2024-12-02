@@ -34,8 +34,8 @@ var timeline = []
 
 var images = [
     '../../img/10.png',
-    '../../img/27.png',
-    '../../img/18.png',
+    '../../img/25.png',
+    '../../img/8.png',
 ]
 
 // 预加载实验刺激
